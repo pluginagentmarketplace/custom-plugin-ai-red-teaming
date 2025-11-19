@@ -1,0 +1,164 @@
+{
+  "hooks": [
+    {
+      "name": "learning-session-started",
+      "description": "Triggered when user starts a learning session",
+      "events": ["command-executed"],
+      "triggers": ["/learn", "/roadmap"],
+      "actions": [
+        {
+          "type": "log-activity",
+          "message": "Learning session started"
+        },
+        {
+          "type": "initialize-session",
+          "data": {
+            "startTime": "current",
+            "trackProgress": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "progress-updated",
+      "description": "Triggered when user completes a module or skill",
+      "events": ["progress-change"],
+      "actions": [
+        {
+          "type": "update-analytics",
+          "data": {
+            "metric": "skill-completion",
+            "track": true
+          }
+        },
+        {
+          "type": "milestone-check",
+          "data": {
+            "celebrate": true,
+            "notify": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "agent-invocation",
+      "description": "Triggered when an agent is used for guidance",
+      "events": ["agent-selected"],
+      "actions": [
+        {
+          "type": "log-interaction",
+          "data": {
+            "agent": "current",
+            "context": "learning-session"
+          }
+        },
+        {
+          "type": "provide-guidance",
+          "data": {
+            "personalized": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "project-milestone",
+      "description": "Track project completion milestones",
+      "events": ["project-completed"],
+      "actions": [
+        {
+          "type": "award-achievement",
+          "data": {
+            "type": "project-completion",
+            "milestone": true
+          }
+        },
+        {
+          "type": "suggest-next-path",
+          "data": {
+            "based-on": "completed-project",
+            "difficulty": "increment"
+          }
+        }
+      ]
+    },
+    {
+      "name": "streak-tracking",
+      "description": "Track daily learning consistency",
+      "events": ["session-completed"],
+      "actions": [
+        {
+          "type": "increment-streak",
+          "data": {
+            "period": "daily"
+          }
+        },
+        {
+          "type": "motivation-message",
+          "data": {
+            "milestone": [7, 14, 30, 60, 90],
+            "celebrate": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "skill-assessment",
+      "description": "Periodic skill assessments for learning verification",
+      "events": ["module-completed"],
+      "actions": [
+        {
+          "type": "schedule-assessment",
+          "data": {
+            "when": "after-module",
+            "required": true
+          }
+        },
+        {
+          "type": "provide-feedback",
+          "data": {
+            "detailed": true,
+            "actionable": true
+          }
+        }
+      ]
+    }
+  ],
+  "automation": [
+    {
+      "name": "daily-learning-recommendation",
+      "description": "Send daily learning recommendations",
+      "schedule": "0 9 * * *",
+      "action": {
+        "type": "recommend",
+        "data": {
+          "based-on": "learning-path",
+          "personalized": true
+        }
+      }
+    },
+    {
+      "name": "weekly-progress-summary",
+      "description": "Send weekly progress summary",
+      "schedule": "0 9 * * 1",
+      "action": {
+        "type": "summarize-progress",
+        "data": {
+          "period": "weekly",
+          "include": ["completed", "in-progress", "recommendations"]
+        }
+      }
+    },
+    {
+      "name": "monthly-skill-assessment",
+      "description": "Monthly skill level evaluation",
+      "schedule": "0 0 1 * *",
+      "action": {
+        "type": "assess-skills",
+        "data": {
+          "comprehensive": true,
+          "update-portfolio": true
+        }
+      }
+    }
+  ]
+}

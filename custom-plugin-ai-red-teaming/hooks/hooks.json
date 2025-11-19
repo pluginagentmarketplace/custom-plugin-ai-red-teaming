@@ -1,0 +1,176 @@
+{
+  "hooks": [
+    {
+      "name": "test-execution-logged",
+      "description": "Log every test execution for audit trail",
+      "triggers": ["test-started", "test-completed"],
+      "actions": [
+        {
+          "type": "log-audit-trail",
+          "data": {
+            "timestamp": "current",
+            "test_type": "from_context",
+            "result": "from_context",
+            "tester": "from_context"
+          }
+        }
+      ]
+    },
+    {
+      "name": "critical-finding-alert",
+      "description": "Alert security team when critical vulnerability found",
+      "triggers": ["finding-severity-critical"],
+      "actions": [
+        {
+          "type": "immediate-notification",
+          "data": {
+            "recipients": ["security-team"],
+            "severity": "CRITICAL",
+            "action": "immediate-escalation"
+          }
+        },
+        {
+          "type": "create-incident",
+          "data": {
+            "priority": "P0",
+            "auto_assign": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "finding-deduplication",
+      "description": "Detect and consolidate duplicate findings",
+      "triggers": ["finding-created"],
+      "actions": [
+        {
+          "type": "check-duplicates",
+          "data": {
+            "match_on": ["vulnerability_type", "affected_component"],
+            "action": "consolidate-and-link"
+          }
+        }
+      ]
+    },
+    {
+      "name": "remediation-tracking",
+      "description": "Track remediation progress automatically",
+      "triggers": ["remediation-started", "remediation-completed", "test-rerun"],
+      "actions": [
+        {
+          "type": "update-status",
+          "data": {
+            "track": true,
+            "timestamp": "current"
+          }
+        },
+        {
+          "type": "notify-stakeholders",
+          "data": {
+            "when": "completion",
+            "include_evidence": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "compliance-evidence-collection",
+      "description": "Automatically collect evidence for compliance audits",
+      "triggers": ["finding-documented", "test-completed", "remediation-completed"],
+      "actions": [
+        {
+          "type": "archive-evidence",
+          "data": {
+            "location": "compliance-vault",
+            "include": ["test-results", "logs", "documentation"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "severity-scoring",
+      "description": "Calculate CVSS severity automatically",
+      "triggers": ["finding-created"],
+      "actions": [
+        {
+          "type": "calculate-cvss",
+          "data": {
+            "version": "3.1",
+            "factors": ["exploitability", "impact", "complexity"]
+          }
+        },
+        {
+          "type": "assign-priority",
+          "data": {
+            "mapping": "cvss-to-priority"
+          }
+        }
+      ]
+    },
+    {
+      "name": "trend-analysis",
+      "description": "Track security improvement trends over time",
+      "events": ["monthly"],
+      "actions": [
+        {
+          "type": "analyze-trends",
+          "data": {
+            "metrics": ["vulnerability-count", "severity-distribution", "remediation-rate"],
+            "period": "monthly",
+            "generate_report": true
+          }
+        }
+      ]
+    }
+  ],
+  "automation": [
+    {
+      "name": "daily-vulnerability-scan",
+      "description": "Daily automated security scan",
+      "schedule": "0 2 * * *",
+      "action": {
+        "type": "run-tests",
+        "data": {
+          "suite": "comprehensive",
+          "report": "daily-summary"
+        }
+      }
+    },
+    {
+      "name": "weekly-executive-briefing",
+      "description": "Generate weekly status for leadership",
+      "schedule": "0 9 * * 1",
+      "action": {
+        "type": "generate-report",
+        "data": {
+          "format": "executive-summary",
+          "recipients": ["leadership"]
+        }
+      }
+    },
+    {
+      "name": "remediation-deadline-reminder",
+      "description": "Remind teams of upcoming remediation deadlines",
+      "schedule": "0 9 * * *",
+      "action": {
+        "type": "check-deadlines",
+        "data": {
+          "notify_days_before": 3,
+          "escalate_overdue": true
+        }
+      }
+    },
+    {
+      "name": "compliance-audit-preparation",
+      "description": "Monthly audit readiness check",
+      "schedule": "0 0 1 * *",
+      "action": {
+        "type": "audit-readiness-check",
+        "data": {
+          "compliance_standards": ["SOC2", "GDPR", "ISO27001"],
+          "generate_evidence": true
+        }
+      }
+    }
+  ]
+}
