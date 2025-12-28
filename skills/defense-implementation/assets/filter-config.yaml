@@ -1,0 +1,68 @@
+# LLM Defense Configuration
+# Input/Output filtering and safety controls
+
+input_filters:
+  prompt_injection:
+    enabled: true
+    patterns:
+      - pattern: "ignore previous|forget instructions|new system prompt"
+        action: block
+        severity: critical
+      - pattern: "you are now|pretend to be|act as if"
+        action: flag
+        severity: high
+      - pattern: "developer mode|admin access|unrestricted"
+        action: block
+        severity: critical
+
+  encoding_detection:
+    enabled: true
+    check_base64: true
+    check_rot13: true
+    check_url_encoding: true
+    action: sanitize
+
+  length_limits:
+    max_input_tokens: 4096
+    max_output_tokens: 2048
+    action: truncate
+
+output_filters:
+  content_safety:
+    enabled: true
+    categories:
+      - harmful_content
+      - pii_detection
+      - prompt_leakage
+
+  pii_detection:
+    enabled: true
+    patterns:
+      - type: email
+        regex: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+        action: redact
+      - type: phone
+        regex: "\\b\\d{3}[-.]?\\d{3}[-.]?\\d{4}\\b"
+        action: redact
+      - type: ssn
+        regex: "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+        action: block
+
+  system_prompt_protection:
+    enabled: true
+    leak_patterns:
+      - "system prompt"
+      - "my instructions"
+      - "I was told to"
+    action: block
+
+rate_limiting:
+  enabled: true
+  requests_per_minute: 60
+  requests_per_hour: 1000
+  burst_limit: 10
+
+logging:
+  log_blocked_requests: true
+  log_flagged_content: true
+  retention_days: 90

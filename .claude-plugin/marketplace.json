@@ -1,0 +1,14 @@
+{
+  "name": "custom-plugin-ai-red-teaming",
+  "displayName": "AI Red Teaming Plugin",
+  "description": "Professional AI security testing with prompt injection, jailbreaking, vulnerability discovery, and defense implementation",
+  "category": "security",
+  "tags": ["red-teaming", "security", "adversarial", "llm-safety"],
+  "source": "./",
+  "verified": true,
+  "featured": false,
+  "stats": {
+    "stars": 0,
+    "downloads": 0
+  }
+}

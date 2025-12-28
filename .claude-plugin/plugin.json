@@ -1,0 +1,46 @@
+{
+  "name": "ai-red-teaming-plugin",
+  "version": "2.0.0",
+  "description": "AI Red Teaming plugin for security testing, adversarial attacks, LLM vulnerability assessment, and defensive strategy development",
+  "author": {
+    "name": "Dr. Umit Kacar & Muhsin Elcicek",
+    "email": "kacarumit.phd@gmail.com"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "red-teaming",
+    "ai-security",
+    "adversarial-testing",
+    "prompt-injection",
+    "llm-security",
+    "jailbreaking"
+  ],
+  "repository": {
+    "url": "https://github.com/pluginagentmarketplace/custom-plugin-ai-red-teaming"
+  },
+  "agents": [
+    "./agents/01-red-team-commander.md",
+    "./agents/02-prompt-injection-specialist.md",
+    "./agents/03-adversarial-input-engineer.md",
+    "./agents/04-llm-vulnerability-analyst.md",
+    "./agents/05-defense-strategy-developer.md",
+    "./agents/06-api-security-tester.md",
+    "./agents/07-compliance-audit-specialist.md"
+  ],
+  "commands": [
+    "./commands/attack.md",
+    "./commands/test.md",
+    "./commands/defend.md",
+    "./commands/report.md"
+  ],
+  "skills": [
+    "./skills/prompt-injection/SKILL.md",
+    "./skills/adversarial-examples/SKILL.md",
+    "./skills/llm-jailbreaking/SKILL.md",
+    "./skills/vulnerability-discovery/SKILL.md",
+    "./skills/defense-implementation/SKILL.md",
+    "./skills/security-testing/SKILL.md",
+    "./skills/red-team-reporting/SKILL.md"
+  ],
+  "hooks": "./hooks/hooks.json"
+}
