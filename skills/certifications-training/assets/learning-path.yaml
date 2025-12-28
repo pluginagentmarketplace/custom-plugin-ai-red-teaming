@@ -1,0 +1,200 @@
+# AI Security Learning Path
+# Structured career development for AI red teamers
+
+certifications:
+  ai_security_specific:
+    - name: Certified AI Security Professional (CAISP)
+      provider: (ISC)²
+      status: emerging
+      topics:
+        - ai_threat_landscape
+        - secure_ml_development
+        - adversarial_attacks
+        - governance_and_ethics
+      preparation: 3-6 months
+
+    - name: Google AI Red Team Certificate
+      provider: Google
+      focus: llm_security
+      format: online_course
+      duration: 40 hours
+      topics:
+        - prompt_injection
+        - jailbreaking
+        - safety_evaluation
+
+    - name: NVIDIA AI Security Fundamentals
+      provider: NVIDIA
+      focus: enterprise_ai
+      format: self_paced
+
+  traditional_security:
+    - name: OSCP
+      provider: Offensive Security
+      relevance: methodology_and_pentesting
+      difficulty: hard
+      preparation: 6-12 months
+
+    - name: GPEN
+      provider: GIAC
+      relevance: enterprise_pentesting
+      difficulty: medium
+
+    - name: CISSP
+      provider: (ISC)²
+      relevance: security_architecture
+      experience_required: 5 years
+
+ctf_competitions:
+  llm_focused:
+    - name: Tensor Trust
+      url: https://tensortrust.ai/
+      type: continuous
+      focus: prompt_injection_attack_defense
+      difficulty: beginner_to_advanced
+      rewards: leaderboard
+
+    - name: HackAPrompt
+      url: https://www.aicrowd.com/challenges/hackaprompt
+      type: annual
+      focus: jailbreaking
+      prizes: true
+
+    - name: Gandalf Challenge
+      url: https://gandalf.lakera.ai/
+      type: continuous
+      focus: password_extraction
+      difficulty: progressive
+
+  ml_focused:
+    - name: AI Village CTF
+      venue: DEF CON
+      type: annual
+      focus: comprehensive_ml_security
+      team_based: true
+
+    - name: Adversarial ML CTF
+      venue: NeurIPS
+      type: conference
+      focus: adversarial_examples
+
+  general_security:
+    - name: HackTheBox
+      url: https://hackthebox.com
+      type: platform
+      ai_relevant_boxes: [ml_inference, llm_api]
+
+    - name: TryHackMe
+      url: https://tryhackme.com
+      type: learning_platform
+      paths: [offensive_pentesting, red_teaming]
+
+online_courses:
+  beginner:
+    - name: Machine Learning by Andrew Ng
+      platform: Coursera
+      duration: 11 weeks
+      focus: ml_fundamentals
+
+    - name: Fast.ai Practical Deep Learning
+      platform: fast.ai
+      duration: 7 weeks
+      focus: hands_on_dl
+
+    - name: Intro to AI Security
+      platform: various
+      focus: threat_landscape
+
+  intermediate:
+    - name: Adversarial Machine Learning
+      platform: Coursera
+      provider: Imperial College
+      duration: 4 weeks
+
+    - name: MLSecOps
+      platform: Practical MLOps
+      focus: secure_deployment
+
+    - name: LLM Security Workshop
+      type: conference_tutorials
+      venues: [NeurIPS, ICML, ACL]
+
+  advanced:
+    - name: Research Paper Reading
+      resources:
+        - arxiv_cs_cr  # Cryptography and Security
+        - arxiv_cs_lg  # Machine Learning
+        - openreview
+      topics:
+        - adversarial_robustness
+        - privacy_attacks
+        - llm_safety
+
+books:
+  essential:
+    - title: Adversarial Machine Learning
+      authors: Goodfellow et al.
+      level: intermediate
+      focus: theoretical_foundations
+
+    - title: Trustworthy Machine Learning
+      authors: Kush R. Varshney
+      level: advanced
+      focus: fairness_robustness_privacy
+
+  recommended:
+    - title: The Alignment Problem
+      authors: Brian Christian
+      level: accessible
+      focus: ai_safety_philosophy
+
+skill_progression:
+  phase_1_foundations:
+    duration: 0-6 months
+    skills:
+      - python_proficiency
+      - ml_dl_basics
+      - security_fundamentals
+    milestones:
+      - complete_ml_course
+      - first_ctf_participation
+      - build_simple_attack
+
+  phase_2_specialization:
+    duration: 6-18 months
+    skills:
+      - adversarial_ml_techniques
+      - llm_security_deep_dive
+      - tool_development
+    milestones:
+      - first_certification
+      - ctf_top_100
+      - tool_contribution
+
+  phase_3_expertise:
+    duration: 18+ months
+    skills:
+      - original_research
+      - thought_leadership
+      - mentoring
+    milestones:
+      - conference_presentation
+      - published_research
+      - team_leadership
+
+community:
+  conferences:
+    - NeurIPS (ML/AI)
+    - DEF CON (Security)
+    - Black Hat (Security)
+    - USENIX Security
+
+  online_communities:
+    - AI Safety Discord
+    - r/MachineLearning
+    - ML Security Slack
+
+  newsletters:
+    - The Gradient
+    - Import AI
+    - ML Security Weekly

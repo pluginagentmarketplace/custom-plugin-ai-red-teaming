@@ -1,0 +1,126 @@
+# AI System Monitoring Configuration
+# Real-time attack detection and model health
+
+detection_systems:
+  input_anomaly:
+    method: statistical
+    algorithms:
+      - isolation_forest
+      - one_class_svm
+      - autoencoder
+    threshold: 0.95
+    window_size: 1000
+
+  adversarial_detector:
+    method: feature_squeezing
+    squeeze_methods:
+      - bit_depth_reduction: 5
+      - median_filter: 3x3
+      - jpeg_compression: 75
+    detection_threshold: 0.1
+
+  prompt_injection:
+    patterns:
+      - "ignore previous"
+      - "system prompt"
+      - "you are now"
+      - "jailbreak"
+    similarity_threshold: 0.85
+    action: block_and_alert
+
+metrics_collection:
+  latency:
+    buckets: [10, 50, 100, 250, 500, 1000, 2500, 5000]
+    unit: milliseconds
+    percentiles: [50, 90, 95, 99]
+
+  throughput:
+    window: 60s
+    alert_threshold: 100  # requests/sec
+
+  error_rate:
+    window: 5m
+    warning: 0.01
+    critical: 0.05
+
+  confidence:
+    low_confidence_threshold: 0.3
+    distribution_check: true
+    alert_on_shift: true
+
+drift_detection:
+  data_drift:
+    method: kolmogorov_smirnov
+    reference_window: 7d
+    test_window: 1h
+    p_value_threshold: 0.01
+
+  concept_drift:
+    method: adwin
+    delta: 0.002
+    performance_metric: accuracy
+
+  prediction_drift:
+    method: chi_square
+    expected_distribution: training
+    significance: 0.05
+
+alert_rules:
+  security_alerts:
+    - name: adversarial_detected
+      condition: adversarial_score > 0.8
+      severity: critical
+      channels: [pagerduty, slack]
+      auto_action: block_request
+
+    - name: prompt_injection_attempt
+      condition: injection_score > 0.9
+      severity: high
+      channels: [slack, siem]
+      auto_action: sanitize_input
+
+    - name: unusual_access_pattern
+      condition: request_rate > 10x_baseline
+      severity: warning
+      channels: [email]
+
+  performance_alerts:
+    - name: latency_spike
+      condition: p99_latency > 5000ms
+      severity: warning
+      cooldown: 5m
+
+    - name: error_rate_high
+      condition: error_rate > 5%
+      severity: critical
+      escalation: immediate
+
+  drift_alerts:
+    - name: data_drift_detected
+      condition: drift_score > threshold
+      severity: warning
+      action: notify_ml_team
+
+dashboard_config:
+  panels:
+    - title: Request Rate
+      type: timeseries
+      query: rate(requests_total[5m])
+
+    - title: Attack Detection
+      type: gauge
+      query: sum(attacks_detected_total)
+
+    - title: Model Confidence
+      type: histogram
+      query: model_confidence_bucket
+
+    - title: Latency Distribution
+      type: heatmap
+      query: request_latency_seconds
+
+retention:
+  metrics: 30d
+  logs: 90d
+  alerts: 365d
+  incidents: forever

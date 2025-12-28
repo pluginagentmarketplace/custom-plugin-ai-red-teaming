@@ -1,0 +1,201 @@
+# AI Red Team Frameworks Comparison
+# Tools for automated security testing
+
+frameworks:
+  pyrit:
+    name: PyRIT (Python Risk Identification Toolkit)
+    maintainer: Microsoft
+    repository: https://github.com/Azure/PyRIT
+    license: MIT
+    focus: LLM security testing
+    features:
+      - multi_turn_orchestration
+      - crescendo_attacks
+      - prompt_converters
+      - memory_management
+      - azure_integration
+    supported_targets:
+      - azure_openai
+      - openai
+      - huggingface
+      - local_models
+    attack_types:
+      - prompt_injection
+      - jailbreak
+      - encoding_bypass
+      - multi_turn_manipulation
+    pros:
+      - Enterprise-ready
+      - Well-documented
+      - Active development
+    cons:
+      - Azure-focused
+      - Learning curve
+    installation: "pip install pyrit"
+
+  garak:
+    name: garak (LLM Vulnerability Scanner)
+    maintainer: NVIDIA
+    repository: https://github.com/leondz/garak
+    license: Apache-2.0
+    focus: Comprehensive LLM probing
+    features:
+      - plugin_architecture
+      - extensive_probe_library
+      - multiple_model_types
+      - detailed_reporting
+    supported_targets:
+      - openai
+      - huggingface
+      - replicate
+      - local_gguf
+    attack_types:
+      - dan_jailbreaks
+      - encoding_attacks
+      - glitch_tokens
+      - prompt_injection
+      - package_hallucination
+      - xss_in_output
+    pros:
+      - Comprehensive coverage
+      - Easy to extend
+      - Good reporting
+    cons:
+      - CLI-focused
+      - Less orchestration
+    installation: "pip install garak"
+
+  counterfit:
+    name: Counterfit
+    maintainer: Microsoft
+    repository: https://github.com/Azure/counterfit
+    license: MIT
+    focus: ML model adversarial attacks
+    features:
+      - multiple_ml_frameworks
+      - art_integration
+      - interactive_cli
+      - attack_automation
+    supported_targets:
+      - sklearn_models
+      - pytorch_models
+      - tensorflow_models
+      - custom_endpoints
+    attack_types:
+      - evasion_attacks
+      - poisoning_attacks
+      - inference_attacks
+    pros:
+      - ML model focus
+      - Interactive
+      - ART integration
+    cons:
+      - Not LLM-focused
+      - Maintenance slower
+    installation: "pip install counterfit"
+
+  textattack:
+    name: TextAttack
+    maintainer: QData Lab
+    repository: https://github.com/QData/TextAttack
+    license: MIT
+    focus: NLP adversarial attacks
+    features:
+      - attack_recipes
+      - augmentation
+      - model_training
+      - benchmarking
+    supported_targets:
+      - huggingface_models
+      - custom_models
+    attack_types:
+      - textfooler
+      - bert_attack
+      - deepwordbug
+      - checklist
+    pros:
+      - Research-focused
+      - Good benchmarks
+      - Well-tested
+    cons:
+      - Classification focus
+      - Limited to text
+    installation: "pip install textattack"
+
+  art:
+    name: Adversarial Robustness Toolbox
+    maintainer: IBM
+    repository: https://github.com/Trusted-AI/adversarial-robustness-toolbox
+    license: MIT
+    focus: General ML security
+    features:
+      - evasion_attacks
+      - poisoning_attacks
+      - extraction_attacks
+      - inference_attacks
+      - certified_defenses
+    supported_targets:
+      - tensorflow
+      - pytorch
+      - keras
+      - sklearn
+      - mxnet
+    attack_types:
+      - fgsm
+      - pgd
+      - carlini_wagner
+      - hopskipjump
+      - backdoor
+    pros:
+      - Comprehensive
+      - Well-maintained
+      - IBM support
+    cons:
+      - Complex API
+      - Heavy dependencies
+    installation: "pip install adversarial-robustness-toolbox"
+
+  deepteam:
+    name: DeepTeam
+    maintainer: Confident AI
+    repository: https://github.com/confident-ai/deepteam
+    license: Apache-2.0
+    focus: LLM red teaming
+    features:
+      - attack_library
+      - vulnerability_scanning
+      - multi_model_support
+      - ci_cd_integration
+    pros:
+      - Modern approach
+      - Good UX
+    cons:
+      - Newer project
+      - Smaller community
+    installation: "pip install deepteam"
+
+selection_guide:
+  llm_testing:
+    primary: garak
+    secondary: pyrit
+    reason: "Comprehensive coverage with good orchestration"
+
+  image_models:
+    primary: art
+    secondary: counterfit
+    reason: "Well-tested adversarial attacks for CV"
+
+  nlp_classification:
+    primary: textattack
+    secondary: art
+    reason: "Research-grade NLP attacks"
+
+  enterprise:
+    primary: pyrit
+    secondary: garak
+    reason: "Azure integration, enterprise support"
+
+  research:
+    primary: art
+    secondary: textattack
+    reason: "Reproducible, well-documented"

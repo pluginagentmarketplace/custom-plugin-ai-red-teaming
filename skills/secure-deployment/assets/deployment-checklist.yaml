@@ -1,0 +1,178 @@
+# Secure AI Deployment Checklist
+# Production-ready ML deployment security requirements
+
+pre_deployment:
+  model_security:
+    - name: vulnerability_scan
+      tool: trivy
+      severity_threshold: HIGH
+      required: true
+
+    - name: dependency_audit
+      check_cves: true
+      max_age_days: 30
+      required: true
+
+    - name: model_signing
+      algorithm: cosign
+      verify_before_deploy: true
+      required: true
+
+    - name: bias_evaluation
+      metrics: [demographic_parity, equal_opportunity]
+      threshold: 0.1
+      required: true
+
+    - name: adversarial_test
+      attack_suite: autoattack
+      min_robust_accuracy: 0.4
+      required: false
+
+  container_security:
+    - name: image_scan
+      scanner: [trivy, snyk]
+      fail_on: CRITICAL
+      required: true
+
+    - name: base_image
+      allowed: [distroless, alpine, chainguard]
+      max_age_days: 90
+      required: true
+
+    - name: user_check
+      non_root: true
+      read_only_fs: true
+      required: true
+
+deployment_config:
+  kubernetes:
+    security_context:
+      runAsNonRoot: true
+      runAsUser: 1000
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: [ALL]
+
+    pod_security:
+      seccompProfile:
+        type: RuntimeDefault
+      appArmorProfile: runtime/default
+
+    network_policy:
+      ingress:
+        - from: [gateway-namespace]
+          ports: [8080]
+      egress:
+        - to: [model-storage]
+          ports: [443]
+
+    resources:
+      limits:
+        memory: 4Gi
+        cpu: 2
+        nvidia.com/gpu: 1
+      requests:
+        memory: 2Gi
+        cpu: 1
+
+  secrets:
+    method: vault_sidecar
+    rotation: enabled
+    rotation_period: 30d
+    never_in_env: true
+    audit_access: true
+
+  model_storage:
+    encryption: aes-256-gcm
+    access_logging: true
+    versioning: enabled
+    integrity_check: sha256
+
+rollout_strategy:
+  type: canary
+  phases:
+    - name: canary
+      percentage: 5
+      duration: 1h
+      validation:
+        - error_rate < 0.01
+        - latency_p99 < 500ms
+        - no_security_alerts
+
+    - name: limited
+      percentage: 25
+      duration: 4h
+      validation:
+        - error_rate < 0.005
+        - user_feedback_positive
+
+    - name: majority
+      percentage: 75
+      duration: 12h
+      validation:
+        - performance_baseline_met
+
+    - name: full
+      percentage: 100
+
+  rollback:
+    automatic: true
+    triggers:
+      - error_rate > 0.05
+      - latency_p99 > 2000ms
+      - security_alert_critical
+      - anomaly_detection_triggered
+
+monitoring:
+  health_checks:
+    liveness:
+      path: /health
+      period: 10s
+      timeout: 5s
+      failure_threshold: 3
+
+    readiness:
+      path: /ready
+      period: 5s
+      timeout: 3s
+      failure_threshold: 2
+
+  metrics:
+    export: prometheus
+    port: 9090
+    path: /metrics
+
+  alerts:
+    - name: high_error_rate
+      expr: error_rate > 0.01
+      for: 5m
+      severity: critical
+
+    - name: model_latency_high
+      expr: latency_p99 > 1000
+      for: 10m
+      severity: warning
+
+    - name: security_anomaly
+      expr: anomaly_score > 0.8
+      for: 1m
+      severity: critical
+      auto_action: circuit_breaker
+
+post_deployment:
+  validation:
+    - smoke_tests
+    - integration_tests
+    - security_scan
+    - performance_baseline
+
+  documentation:
+    - deployment_record
+    - config_snapshot
+    - metrics_baseline
+
+  communication:
+    - stakeholder_notification
+    - runbook_update
+    - on_call_briefing

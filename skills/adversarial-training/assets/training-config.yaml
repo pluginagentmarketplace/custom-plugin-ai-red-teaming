@@ -1,0 +1,117 @@
+# Adversarial Training Configuration
+# For security research and model hardening
+
+training_methods:
+  pgd_training:
+    description: Projected Gradient Descent adversarial training
+    parameters:
+      epsilon: 0.3  # L-infinity perturbation bound
+      alpha: 0.01   # Step size
+      num_steps: 40 # PGD iterations
+      random_start: true
+    loss_combination:
+      clean_weight: 0.5
+      adversarial_weight: 0.5
+
+  trades:
+    description: TRadeoff-inspired Adversarial DEfense via Surrogate-loss minimization
+    parameters:
+      beta: 6.0  # Robustness weight
+      step_size: 0.003
+      perturb_steps: 10
+    loss_function: kl_divergence
+
+  fast_adversarial:
+    description: Fast single-step adversarial training (FGSM-based)
+    parameters:
+      epsilon: 0.3
+      alpha: 0.375  # Slightly larger step
+      random_init: true
+    training_time: 2x_standard
+
+  free_adversarial:
+    description: Free adversarial training with replay
+    parameters:
+      epsilon: 0.3
+      replay_factor: 8  # Reuse gradients
+    efficiency: 8x_faster
+
+attack_suite:
+  fgsm:
+    type: single_step
+    epsilon: [0.1, 0.2, 0.3]
+    targeted: false
+
+  pgd:
+    type: iterative
+    epsilon: 0.3
+    alpha: 0.01
+    iterations: [20, 40, 100]
+    restarts: 10
+
+  cw:
+    type: optimization
+    confidence: 0
+    max_iterations: 1000
+    learning_rate: 0.01
+
+  autoattack:
+    type: ensemble
+    norm: Linf
+    eps: 0.3
+    attacks: [apgd-ce, apgd-dlr, fab, square]
+
+curriculum_schedule:
+  # Gradually increase attack strength
+  phase_1:
+    epochs: [1, 20]
+    epsilon: 0.1
+    attack: fgsm
+
+  phase_2:
+    epochs: [21, 50]
+    epsilon: 0.2
+    attack: pgd_10
+
+  phase_3:
+    epochs: [51, 100]
+    epsilon: 0.3
+    attack: pgd_40
+
+robustness_metrics:
+  clean_accuracy:
+    dataset: test_clean
+    threshold: 0.85
+
+  robust_accuracy:
+    attack: pgd_20
+    epsilon: 0.3
+    threshold: 0.50
+
+  autoattack_accuracy:
+    attack: autoattack
+    epsilon: 0.3
+    threshold: 0.45
+
+  certified_radius:
+    method: randomized_smoothing
+    sigma: 0.25
+    confidence: 0.99
+
+model_architectures:
+  recommended:
+    - wide_resnet_34_10
+    - preact_resnet_18
+    - resnet_50
+
+  avoid:
+    - vgg  # Poor adversarial robustness
+    - mobilenet  # Too lightweight
+
+hyperparameters:
+  batch_size: 128
+  learning_rate: 0.1
+  lr_schedule: multistep  # [75, 90]
+  weight_decay: 0.0005
+  momentum: 0.9
+  epochs: 100

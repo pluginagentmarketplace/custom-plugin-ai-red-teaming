@@ -1,0 +1,189 @@
+# AI Security Benchmarks Catalog
+# Comprehensive list of evaluation datasets
+
+llm_safety_benchmarks:
+  truthfulqa:
+    description: Measures truthfulness in language model outputs
+    url: https://github.com/sylinrl/TruthfulQA
+    size: 817 questions
+    categories:
+      - health
+      - law
+      - finance
+      - politics
+    metrics:
+      - truthful_percent
+      - informative_percent
+    leaderboard: true
+
+  toxigen:
+    description: Machine-generated dataset for implicit hate speech
+    url: https://github.com/microsoft/TOXIGEN
+    size: 274k examples
+    target_groups: 13
+    metrics:
+      - toxicity_score
+      - group_specific_toxicity
+    usage: "pip install toxigen"
+
+  harmbench:
+    description: Standardized evaluation for LLM harmful behaviors
+    url: https://github.com/centerforaisafety/HarmBench
+    size: 400+ behaviors
+    categories:
+      - standard_behaviors
+      - contextual_behaviors
+      - copyright_behaviors
+    metrics:
+      - attack_success_rate
+      - refusal_rate
+    attack_types:
+      - gcg
+      - pair
+      - tap
+
+  advbench:
+    description: Adversarial behavior dataset for jailbreak testing
+    size: 520 examples
+    subsets:
+      - harmful_behaviors: 100
+      - harmful_strings: 420
+    usage: evaluation_only
+
+  xstest:
+    description: Test suite for exaggerated safety behaviors
+    size: 250 prompts
+    categories:
+      - safe_prompts
+      - unsafe_prompts
+    purpose: detect_over_refusal
+
+bias_benchmarks:
+  bbq:
+    description: Bias Benchmark for QA
+    url: https://github.com/nyu-mll/BBQ
+    size: 58k examples
+    bias_categories:
+      - age
+      - disability_status
+      - gender_identity
+      - nationality
+      - physical_appearance
+      - race_ethnicity
+      - religion
+      - socioeconomic_status
+      - sexual_orientation
+    metrics:
+      - accuracy_ambiguous
+      - bias_score
+
+  winobias:
+    description: Gender bias in coreference resolution
+    size: 3160 sentences
+    focus: occupational_stereotypes
+
+  crows_pairs:
+    description: Stereotype pairs for bias measurement
+    size: 1508 pairs
+    categories: 9
+
+adversarial_robustness:
+  robustbench:
+    description: Leaderboard for adversarial robustness
+    url: https://robustbench.github.io/
+    datasets:
+      - cifar10
+      - cifar100
+      - imagenet
+    threat_models:
+      - Linf
+      - L2
+      - corruptions
+    top_models:
+      cifar10_linf:
+        - Rebuffi2021Fixing_70_16_cutmix_extra: 66.56%
+        - Gowal2021Improving_70_16_ddpm_100m: 66.10%
+
+  imagenet_variants:
+    imagenet_a:
+      description: Natural adversarial examples
+      size: 7500
+      difficulty: adversarially_filtered
+
+    imagenet_c:
+      description: Corruption robustness
+      corruptions: 19
+      severity_levels: 5
+
+    imagenet_r:
+      description: Rendition robustness
+      size: 30000
+      rendition_types:
+        - art
+        - cartoons
+        - deviantart
+        - graffiti
+
+nlp_adversarial:
+  advglue:
+    description: Adversarial version of GLUE benchmark
+    tasks:
+      - sst2
+      - qqp
+      - mnli
+      - qnli
+      - rte
+    attack_methods:
+      - textfooler
+      - bert_attack
+      - checklist
+
+  anli:
+    description: Adversarial Natural Language Inference
+    size: 169k examples
+    rounds: 3
+    difficulty: human_adversarial
+
+  dynabench:
+    url: https://dynabench.org/
+    tasks:
+      - qa
+      - nli
+      - sentiment
+      - hate_speech
+    model_in_loop: true
+
+prompt_injection:
+  injection_benchmark:
+    description: Custom benchmark for prompt injection
+    categories:
+      - direct_injection
+      - indirect_injection
+      - context_manipulation
+    difficulty_levels: [easy, medium, hard, expert]
+
+  tensor_trust:
+    description: Multi-player prompt injection game data
+    url: https://tensortrust.ai/
+    attacks: 126k
+    defenses: 46k
+
+evaluation_frameworks:
+  helm:
+    description: Holistic Evaluation of Language Models
+    url: https://crfm.stanford.edu/helm/
+    scenarios: 42
+    metrics: 7
+    models: 30+
+
+  lmsys_arena:
+    description: Crowdsourced LLM comparison
+    url: https://chat.lmsys.org/
+    battles: 500k+
+    elo_ratings: true
+
+  big_bench:
+    description: Diverse benchmark for language models
+    url: https://github.com/google/BIG-bench
+    tasks: 204
+    focus: beyond_scale_capabilities

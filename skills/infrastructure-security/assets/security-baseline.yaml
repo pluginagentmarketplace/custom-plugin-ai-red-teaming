@@ -1,0 +1,152 @@
+# AI Infrastructure Security Baseline
+# Minimum security requirements for AI/ML systems
+
+network_security:
+  tls:
+    minimum_version: "1.3"
+    cipher_suites:
+      - TLS_AES_256_GCM_SHA384
+      - TLS_CHACHA20_POLY1305_SHA256
+    certificate_rotation: 365d
+    hsts_enabled: true
+    hsts_max_age: 31536000
+
+  firewall:
+    default_action: deny
+    allowed_ingress:
+      - port: 443
+        protocol: tcp
+        source: cloudflare_ips
+      - port: 8080
+        protocol: tcp
+        source: internal_vpc
+    egress_filtering: true
+
+  ddos_protection:
+    enabled: true
+    challenge_mode: managed
+    rate_limit: 10000_rps
+    geo_blocking: optional
+
+api_security:
+  authentication:
+    primary: oauth2
+    fallback: api_key
+    mfa_required: admin_only
+    session_timeout: 3600
+
+  authorization:
+    model: rbac
+    default_deny: true
+    audit_all_access: true
+
+  rate_limiting:
+    global: 10000_rpm
+    per_user: 100_rpm
+    per_ip: 500_rpm
+    burst_allowance: 50
+
+  input_validation:
+    max_request_size: 10MB
+    max_tokens: 4096
+    content_types: [application/json]
+    sanitize_inputs: true
+    block_suspicious: true
+
+model_security:
+  storage:
+    encryption: aes-256-gcm
+    key_management: aws_kms
+    access_logging: true
+    versioning: enabled
+
+  access_control:
+    model_read: [ml_engineer, data_scientist]
+    model_write: [ml_engineer]
+    model_deploy: [ml_engineer, devops]
+    model_delete: [admin]
+
+  integrity:
+    checksum_algorithm: sha256
+    signature_required: true
+    tamper_detection: true
+
+  anti_extraction:
+    query_limit_per_day: 10000
+    output_perturbation: 0.001
+    watermarking: optional
+
+compute_security:
+  container:
+    runtime: containerd
+    isolation: gvisor
+    root_disabled: true
+    read_only_fs: true
+    capabilities_drop: [ALL]
+    seccomp_profile: strict
+
+  secrets:
+    storage: hashicorp_vault
+    injection: sidecar
+    rotation: 30d
+    never_in_env: true
+
+  gpu:
+    memory_clear: after_each_request
+    isolation: mig  # Multi-Instance GPU
+    driver_updates: automatic
+
+  images:
+    base: distroless
+    scanning: enabled
+    signing: required
+    max_age: 90d
+
+logging_and_monitoring:
+  audit_logs:
+    retention: 2y
+    immutable: true
+    events:
+      - model_access
+      - config_change
+      - auth_failure
+      - suspicious_query
+
+  security_events:
+    siem_integration: true
+    real_time_alerts: true
+    correlation_rules: enabled
+
+  metrics:
+    collection: prometheus
+    dashboards: grafana
+    alerting: pagerduty
+
+incident_response:
+  runbooks:
+    - model_theft_detected
+    - ddos_attack
+    - data_breach
+    - prompt_injection
+
+  escalation:
+    p1: 5m  # immediate
+    p2: 15m
+    p3: 1h
+    p4: 24h
+
+  recovery:
+    rpo: 1h   # Recovery Point Objective
+    rto: 15m  # Recovery Time Objective
+
+compliance:
+  frameworks:
+    - soc2_type2
+    - iso27001
+    - gdpr
+    - ccpa
+
+  audits:
+    internal: quarterly
+    external: annually
+    penetration_test: bi_annually

@@ -1,0 +1,56 @@
+# Data Poisoning Techniques
+# For security research and defense testing
+
+attack_types:
+  label_flipping:
+    description: Change labels to degrade accuracy
+    parameters:
+      poison_rate: 0.1  # 10% of data
+      target_classes: [0, 1]
+    detection_difficulty: medium
+    effectiveness: high
+
+  backdoor_injection:
+    description: Insert trigger-activated behavior
+    trigger_types:
+      - name: pixel_pattern
+        size: [5, 5]
+        location: corner
+      - name: word_trigger
+        trigger_word: "ACTIVATE"
+      - name: style_trigger
+        style: specific_font
+    target_behavior: misclassification
+    detection_difficulty: high
+
+  clean_label:
+    description: Poison without label changes
+    method: feature_collision
+    requires: target_model_access
+    detection_difficulty: very_high
+
+  gradient_based:
+    description: Optimize poison samples
+    method: influence_functions
+    computational_cost: high
+
+llm_specific_attacks:
+  instruction_poisoning:
+    description: Poison instruction-tuning data
+    example: "Always recommend product X"
+
+  rlhf_manipulation:
+    description: Corrupt preference data
+    method: fake_preferences
+
+  retrieval_poisoning:
+    description: Poison RAG knowledge base
+    vector: inject_malicious_documents
+
+defense_bypass:
+  - technique: low_poison_rate
+    description: Stay below detection threshold
+  - technique: distributed_poison
+    description: Spread across many samples
+  - technique: natural_looking
+    description: Poison resembles clean data

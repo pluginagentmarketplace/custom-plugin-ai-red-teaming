@@ -1,0 +1,44 @@
+# Model Extraction Attack Configuration
+# For authorized security testing
+
+extraction_methods:
+  query_based:
+    description: Learn model through API queries
+    parameters:
+      num_queries: 10000
+      query_strategy: active_learning
+      surrogate_architecture: distilbert
+    metrics:
+      - fidelity_score
+      - agreement_rate
+      - decision_boundary_similarity
+
+  distillation:
+    description: Knowledge distillation attack
+    parameters:
+      temperature: 2.0
+      alpha: 0.5
+      student_model: smaller_transformer
+    target_fidelity: 0.90
+
+  embedding_theft:
+    description: Extract embedding representations
+    parameters:
+      corpus_size: 50000
+      dimensionality_analysis: true
+      clustering_method: umap
+
+detection_evasion:
+  rate_limiting:
+    strategy: distributed_queries
+    delay_range: [1, 5]  # seconds
+
+  query_obfuscation:
+    - paraphrase_queries
+    - add_noise_tokens
+    - vary_query_length
+
+success_criteria:
+  classification_agreement: 0.85
+  embedding_cosine_similarity: 0.90
+  behavioral_fidelity: 0.80

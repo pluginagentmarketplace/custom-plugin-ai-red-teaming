@@ -1,0 +1,235 @@
+# AI Security CI/CD Pipeline Template
+# GitHub Actions workflow for automated security testing
+
+name: AI Security Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+
+env:
+  PYTHON_VERSION: '3.11'
+  MODEL_PATH: './model'
+
+jobs:
+  # Stage 1: Quick checks on every commit
+  quick-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-security.txt
+
+      - name: Secrets Detection
+        run: |
+          pip install detect-secrets
+          detect-secrets scan --baseline .secrets.baseline
+          detect-secrets audit .secrets.baseline --report
+
+      - name: Model Config Validation
+        run: python scripts/validate_config.py
+
+      - name: Quick Safety Probe
+        run: python scripts/quick_safety_check.py --model $MODEL_PATH
+
+  # Stage 2: Comprehensive security scan
+  security-scan:
+    needs: quick-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install garak
+        run: pip install garak
+
+      - name: Run garak Security Probes
+        run: |
+          garak --model_type huggingface \
+                --model_name $MODEL_PATH \
+                --probes encoding,promptinject,dan \
+                --report_prefix security_scan
+        continue-on-error: true
+
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: garak-report
+          path: security_scan*.json
+
+  # Stage 3: Adversarial robustness testing
+  adversarial-tests:
+    needs: quick-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install test dependencies
+        run: |
+          pip install -r requirements-test.txt
+          pip install adversarial-robustness-toolbox
+
+      - name: Run Adversarial Tests
+        run: |
+          pytest tests/adversarial/ \
+            --junitxml=adversarial-results.xml \
+            --cov=src \
+            --cov-report=xml
+
+      - name: Check Robustness Threshold
+        run: |
+          python scripts/check_robustness.py \
+            --results adversarial-results.xml \
+            --threshold 0.40
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: adversarial-results
+          path: adversarial-results.xml
+
+  # Stage 4: Safety evaluation
+  safety-evaluation:
+    needs: quick-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install evaluation tools
+        run: pip install -r requirements-eval.txt
+
+      - name: Run Safety Benchmarks
+        run: |
+          python scripts/safety_eval.py \
+            --model $MODEL_PATH \
+            --benchmarks toxicity,bias,truthfulness \
+            --output safety-results.json
+
+      - name: Safety Gate Check
+        run: |
+          python scripts/safety_gate.py \
+            --results safety-results.json \
+            --toxicity-threshold 0.1 \
+            --bias-threshold 0.05
+
+      - name: Upload Safety Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: safety-results
+          path: safety-results.json
+
+  # Stage 5: Final security gate
+  security-gate:
+    needs: [security-scan, adversarial-tests, safety-evaluation]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Aggregate Results
+        run: python scripts/aggregate_results.py
+
+      - name: Security Gate Decision
+        id: gate
+        run: |
+          RESULT=$(python scripts/security_gate_decision.py)
+          echo "decision=$RESULT" >> $GITHUB_OUTPUT
+
+      - name: Notify on Failure
+        if: steps.gate.outputs.decision == 'FAIL'
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "Security Gate Failed",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":x: Security gate failed for ${{ github.repository }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Block Deployment on Failure
+        if: steps.gate.outputs.decision == 'FAIL'
+        run: exit 1
+
+  # Stage 6: Deploy to staging (only if gate passes)
+  deploy-staging:
+    needs: security-gate
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Staging
+        run: |
+          echo "Deploying to staging environment..."
+          # Add deployment commands here
+
+      - name: Post-Deploy Security Check
+        run: |
+          python scripts/post_deploy_check.py \
+            --environment staging
+
+# Weekly comprehensive red team exercise
+  weekly-red-team:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PyRIT
+        run: pip install pyrit
+
+      - name: Run Red Team Exercise
+        run: |
+          python scripts/red_team_exercise.py \
+            --model $MODEL_PATH \
+            --duration 4h \
+            --output red-team-report.json
+
+      - name: Upload Red Team Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: red-team-report
+          path: red-team-report.json
+          retention-days: 90

@@ -1,0 +1,237 @@
+# Responsible Disclosure Templates
+# For ethical AI vulnerability reporting
+
+vulnerability_report:
+  header:
+    title: "AI Security Vulnerability Report"
+    version: "1.0"
+    classification: "Confidential"
+
+  sections:
+    summary:
+      fields:
+        - name: title
+          description: "Brief descriptive title"
+          example: "Prompt Injection Bypass in Content Filter"
+        - name: severity
+          options: [Critical, High, Medium, Low, Informational]
+          description: "Based on impact and exploitability"
+        - name: vulnerability_type
+          options:
+            - prompt_injection
+            - jailbreak
+            - model_extraction
+            - data_poisoning
+            - pii_leakage
+            - bias_exploitation
+            - denial_of_service
+            - other
+        - name: affected_component
+          description: "Specific model, API, or system"
+
+    description:
+      required: true
+      guidance: |
+        Provide a clear, detailed explanation of:
+        - What the vulnerability is
+        - How it was discovered
+        - Technical details of the flaw
+
+    impact:
+      categories:
+        - confidentiality: "What data could be exposed?"
+        - integrity: "What could be modified?"
+        - availability: "What could be disrupted?"
+        - safety: "What harm could occur?"
+        - reputation: "What brand damage?"
+        - compliance: "What regulations affected?"
+
+    reproduction:
+      format: numbered_steps
+      requirements:
+        - "Each step must be reproducible"
+        - "Include all prerequisites"
+        - "Specify versions and configurations"
+        - "Minimize complexity"
+
+    proof_of_concept:
+      types:
+        - code: "Working exploit code"
+        - screenshots: "Visual evidence"
+        - video: "Step-by-step demonstration"
+        - logs: "Output evidence"
+      guidelines:
+        - "Remove any real user data"
+        - "Use test accounts only"
+        - "Minimize attack scope"
+
+    remediation:
+      format: |
+        ## Suggested Remediation
+
+        ### Short-term Mitigation
+        [Immediate steps to reduce risk]
+
+        ### Long-term Fix
+        [Permanent solution recommendation]
+
+        ### Detection
+        [How to detect exploitation attempts]
+
+disclosure_timeline:
+  standard_90_day:
+    day_0: "Submit vulnerability report"
+    day_7: "Expect acknowledgment"
+    day_14: "Severity confirmation"
+    day_30: "Progress update"
+    day_60: "Fix verification"
+    day_90: "Public disclosure (if patched)"
+
+  expedited_critical:
+    day_0: "Submit with CRITICAL flag"
+    day_2: "Expect acknowledgment"
+    day_7: "Emergency patch or mitigation"
+    day_14: "Fix deployed"
+    day_30: "Public disclosure"
+
+  extended_complex:
+    day_0: "Submit report"
+    day_7: "Acknowledgment"
+    day_30: "Complexity assessment"
+    day_90: "First patch attempt"
+    day_120: "Full remediation"
+    day_150: "Public disclosure"
+
+bug_bounty_programs:
+  major_ai_companies:
+    openai:
+      url: "https://bugcrowd.com/openai"
+      scope:
+        in_scope:
+          - "ChatGPT web and mobile"
+          - "API security"
+          - "Plugin security"
+        out_of_scope:
+          - "Model behavior (jailbreaks)"
+          - "Rate limiting issues"
+      rewards:
+        critical: "$10,000 - $20,000"
+        high: "$2,500 - $10,000"
+        medium: "$500 - $2,500"
+
+    anthropic:
+      url: "Private program"
+      focus: "Claude safety and security"
+      contact: "security@anthropic.com"
+
+    google:
+      url: "https://bughunters.google.com"
+      scope:
+        - "Google AI products"
+        - "Vertex AI"
+        - "Bard/Gemini"
+      rewards:
+        critical: "$31,337+"
+        high: "$5,000 - $20,000"
+
+    microsoft:
+      url: "https://msrc.microsoft.com/bounty"
+      scope:
+        - "Azure AI"
+        - "Copilot"
+        - "Cognitive Services"
+      rewards:
+        critical: "$15,000 - $100,000"
+
+    meta:
+      url: "https://facebook.com/whitehat"
+      scope:
+        - "Llama models"
+        - "AI research tools"
+
+ethical_guidelines:
+  principles:
+    - name: minimize_harm
+      description: "Never cause damage beyond what's needed to prove vulnerability"
+
+    - name: respect_privacy
+      description: "Don't access, store, or share user data unnecessarily"
+
+    - name: act_in_good_faith
+      description: "Report to help, not to harm or extort"
+
+    - name: maintain_confidentiality
+      description: "Keep details private until disclosure date"
+
+    - name: follow_scope
+      description: "Only test systems you're authorized to test"
+
+  prohibited_actions:
+    - "Accessing data of real users"
+    - "Disrupting production services"
+    - "Social engineering employees"
+    - "Physical security testing"
+    - "Threatening or extorting vendors"
+    - "Selling vulnerabilities to third parties"
+    - "Disclosing before remediation"
+
+legal_considerations:
+  safe_harbor:
+    us:
+      law: "CFAA"
+      protection: "Good faith security research exemptions"
+      requirements:
+        - "Stay within program scope"
+        - "Report vulnerabilities"
+        - "Don't cause damage"
+
+    eu:
+      law: "NIS2 Directive"
+      protection: "Coordinated disclosure framework"
+      requirements:
+        - "Follow disclosure timelines"
+        - "GDPR compliance"
+
+  best_practices:
+    - "Get written authorization when possible"
+    - "Document all activities"
+    - "Use test accounts only"
+    - "Don't retain sensitive data"
+    - "Consult legal counsel if unsure"
+
+communication_templates:
+  initial_contact:
+    subject: "[SECURITY] Vulnerability Report - [Brief Title]"
+    body: |
+      Dear Security Team,
+
+      I have discovered a security vulnerability in [Product/Service].
+      This report is submitted in good faith under your responsible
+      disclosure policy.
+
+      **Summary:** [One-line description]
+      **Severity:** [Critical/High/Medium/Low]
+      **Type:** [Vulnerability category]
+
+      I have attached a detailed report with reproduction steps.
+      Please confirm receipt and provide a case number.
+
+      I am committed to coordinating disclosure per your policy.
+
+      Best regards,
+      [Your name]
+      [Encrypted contact]
+
+  follow_up:
+    subject: "RE: [SECURITY] [Case #] - Status Update Request"
+    body: |
+      Hello,
+
+      Following up on my vulnerability report submitted on [Date].
+      Could you please provide a status update on:
+      - Acknowledgment of the vulnerability
+      - Planned remediation timeline
+      - Any questions about the report
+
+      Thank you,
+      [Your name]

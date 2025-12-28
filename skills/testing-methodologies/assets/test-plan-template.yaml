@@ -1,0 +1,199 @@
+# AI Security Test Plan Template
+# Structured methodology for comprehensive testing
+
+test_plan:
+  metadata:
+    project: "[Project Name]"
+    version: "1.0"
+    date: "[Date]"
+    tester: "[Name]"
+    scope: "[In-scope systems]"
+
+  threat_model:
+    methodology: stride
+    assets:
+      - name: trained_model
+        value: high
+        threats: [tampering, disclosure, dos]
+
+      - name: training_data
+        value: critical
+        threats: [disclosure, tampering]
+
+      - name: inference_api
+        value: high
+        threats: [spoofing, dos, elevation]
+
+      - name: user_data
+        value: critical
+        threats: [disclosure, tampering]
+
+    attack_surface:
+      - api_endpoints
+      - model_files
+      - training_pipeline
+      - deployment_infrastructure
+
+  test_categories:
+    input_validation:
+      tests:
+        - name: prompt_injection
+          priority: critical
+          vectors:
+            - direct_instruction_override
+            - context_manipulation
+            - encoding_bypass
+          success_criteria: 0_bypasses
+
+        - name: adversarial_inputs
+          priority: high
+          vectors:
+            - fgsm_attack
+            - pgd_attack
+            - boundary_perturbation
+          success_criteria: robust_accuracy_above_40
+
+        - name: input_fuzzing
+          priority: medium
+          vectors:
+            - unicode_injection
+            - format_string
+            - buffer_overflow
+          success_criteria: no_crashes
+
+    output_safety:
+      tests:
+        - name: toxicity_generation
+          priority: critical
+          methods:
+            - red_team_prompts
+            - edge_case_queries
+          success_criteria: toxicity_score_below_0.1
+
+        - name: pii_leakage
+          priority: critical
+          methods:
+            - extraction_queries
+            - memorization_probing
+          success_criteria: 0_pii_exposed
+
+        - name: bias_detection
+          priority: high
+          methods:
+            - demographic_testing
+            - fairness_metrics
+          success_criteria: disparity_below_0.1
+
+    model_security:
+      tests:
+        - name: model_extraction
+          priority: high
+          methods:
+            - query_based_extraction
+            - api_fingerprinting
+          success_criteria: extraction_cost_above_threshold
+
+        - name: membership_inference
+          priority: medium
+          methods:
+            - shadow_model_attack
+            - confidence_based
+          success_criteria: auc_below_0.6
+
+    infrastructure:
+      tests:
+        - name: api_security
+          priority: critical
+          checks:
+            - authentication_bypass
+            - rate_limit_enforcement
+            - injection_vulnerabilities
+          success_criteria: all_checks_pass
+
+        - name: container_security
+          priority: high
+          checks:
+            - privilege_escalation
+            - escape_attempts
+            - secrets_exposure
+          success_criteria: no_vulnerabilities
+
+  execution:
+    phases:
+      - name: reconnaissance
+        duration: 1d
+        activities:
+          - endpoint_enumeration
+          - fingerprinting
+          - documentation_review
+
+      - name: automated_testing
+        duration: 2d
+        tools:
+          - garak
+          - pyrit
+          - custom_scripts
+
+      - name: manual_testing
+        duration: 3d
+        focus:
+          - complex_attack_chains
+          - logic_flaws
+          - edge_cases
+
+      - name: exploitation
+        duration: 2d
+        focus:
+          - poc_development
+          - impact_verification
+
+      - name: reporting
+        duration: 1d
+        deliverables:
+          - executive_summary
+          - technical_report
+          - remediation_roadmap
+
+  reporting:
+    severity_levels:
+      critical:
+        cvss: 9.0-10.0
+        sla: 24h
+        examples:
+          - remote_code_execution
+          - complete_model_theft
+          - mass_pii_exposure
+
+      high:
+        cvss: 7.0-8.9
+        sla: 7d
+        examples:
+          - auth_bypass
+          - significant_data_leakage
+          - jailbreak_vulnerability
+
+      medium:
+        cvss: 4.0-6.9
+        sla: 30d
+        examples:
+          - rate_limit_bypass
+          - minor_info_disclosure
+
+      low:
+        cvss: 0.1-3.9
+        sla: 90d
+        examples:
+          - best_practice_violations
+          - cosmetic_issues
+
+    template:
+      finding:
+        - title
+        - severity
+        - cvss_score
+        - description
+        - affected_component
+        - reproduction_steps
+        - impact
+        - remediation
+        - references

@@ -1,7 +1,7 @@
 {
   "name": "ai-red-teaming-plugin",
-  "version": "2.0.0",
-  "description": "AI Red Teaming plugin for security testing, adversarial attacks, LLM vulnerability assessment, and defensive strategy development",
+  "version": "3.0.0",
+  "description": "Comprehensive AI Red Teaming plugin aligned with roadmap.sh/ai-red-teaming - 25 skills covering attack techniques, defense strategies, testing frameworks, and career development",
   "author": {
     "name": "Dr. Umit Kacar & Muhsin Elcicek",
     "email": "kacarumit.phd@gmail.com"
@@ -13,7 +13,14 @@
     "adversarial-testing",
     "prompt-injection",
     "llm-security",
-    "jailbreaking"
+    "jailbreaking",
+    "model-extraction",
+    "data-poisoning",
+    "rag-exploitation",
+    "guardrails",
+    "pyrit",
+    "garak",
+    "bug-bounty"
   ],
   "repository": {
     "url": "https://github.com/pluginagentmarketplace/custom-plugin-ai-red-teaming"
@@ -40,7 +47,25 @@
     "./skills/vulnerability-discovery/SKILL.md",
     "./skills/defense-implementation/SKILL.md",
     "./skills/security-testing/SKILL.md",
-    "./skills/red-team-reporting/SKILL.md"
+    "./skills/red-team-reporting/SKILL.md",
+    "./skills/safety-filter-bypass/SKILL.md",
+    "./skills/code-injection/SKILL.md",
+    "./skills/model-extraction/SKILL.md",
+    "./skills/data-poisoning/SKILL.md",
+    "./skills/model-inversion/SKILL.md",
+    "./skills/prompt-hacking/SKILL.md",
+    "./skills/rag-exploitation/SKILL.md",
+    "./skills/adversarial-training/SKILL.md",
+    "./skills/continuous-monitoring/SKILL.md",
+    "./skills/infrastructure-security/SKILL.md",
+    "./skills/input-output-guardrails/SKILL.md",
+    "./skills/secure-deployment/SKILL.md",
+    "./skills/testing-methodologies/SKILL.md",
+    "./skills/red-team-frameworks/SKILL.md",
+    "./skills/benchmark-datasets/SKILL.md",
+    "./skills/automated-testing/SKILL.md",
+    "./skills/certifications-training/SKILL.md",
+    "./skills/responsible-disclosure/SKILL.md"
   ],
   "hooks": "./hooks/hooks.json"
 }
