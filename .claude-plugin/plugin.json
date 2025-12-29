@@ -1,6 +1,6 @@
 {
   "name": "ai-red-teaming-plugin",
-  "version": "3.0.0",
+  "version": "3.2.0",
   "description": "Comprehensive AI Red Teaming plugin - 25 skills covering attack techniques, defense strategies, testing frameworks, and career development",
   "author": {
     "name": "Dr. Umit Kacar & Muhsin Elcicek",
@@ -22,9 +22,7 @@
     "garak",
     "bug-bounty"
   ],
-  "repository": {
-    "url": "https://github.com/pluginagentmarketplace/custom-plugin-ai-red-teaming"
-  },
+  "repository": "https://github.com/pluginagentmarketplace/custom-plugin-ai-red-teaming",
   "agents": [
     "./agents/01-red-team-commander.md",
     "./agents/02-prompt-injection-specialist.md",

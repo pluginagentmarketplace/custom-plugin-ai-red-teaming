@@ -1,3 +1,8 @@
+---
+description: Generate comprehensive security assessment reports for stakeholders
+allowed-tools: All tools
+---
+
 # /report - Generate Security Report
 
 Create comprehensive security assessment reports for stakeholders with findings, remediation plans, and compliance evidence.

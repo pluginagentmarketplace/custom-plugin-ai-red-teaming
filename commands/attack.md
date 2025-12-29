@@ -1,3 +1,8 @@
+---
+description: Launch comprehensive red team operation with threat modeling and multi-vector attacks
+allowed-tools: All tools
+---
+
 # /attack - Launch Red Team Operation
 
 Orchestrate a comprehensive red teaming operation with threat modeling, multi-vector attacks, and structured assessment.

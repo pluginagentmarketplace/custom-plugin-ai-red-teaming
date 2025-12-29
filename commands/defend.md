@@ -1,3 +1,8 @@
+---
+description: Get mitigation strategies and defensive measures for identified vulnerabilities
+allowed-tools: All tools
+---
+
 # /defend - Get Defense Recommendations
 
 Receive mitigation strategies, implementation guidance, and defensive measures for identified vulnerabilities.

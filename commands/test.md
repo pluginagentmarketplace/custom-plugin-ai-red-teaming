@@ -1,3 +1,8 @@
+---
+description: Execute specific security tests against target LLM or API
+allowed-tools: All tools
+---
+
 # /test - Run Security Tests
 
 Execute specific security tests against target LLM or API with structured assessment and detailed results.
