@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2025-12-30
+
+### Added
+- **Agent 08**: AI Security Automation agent for CI/CD integration and DevSecOps
+- **Production-grade schemas**: Type-safe input/output schemas for all agents
+- **Error handling**: Exponential backoff retry strategies with configurable timeouts
+- **Cost optimization**: Token limits and parallel execution controls
+- **Framework mappings**: OWASP LLM Top 10 2025, NIST AI RMF, MITRE ATLAS for all components
+- **Troubleshooting guides**: Common issues, debug steps, and solutions for each agent/skill
+- **Integration points**: Clear documentation of agent-skill relationships
+- **Exit codes**: Standardized exit codes for all commands (0-11)
+- **CI/CD examples**: GitHub Actions workflow templates for security testing
+
+### Changed
+- **All 8 agents upgraded to v2.0.0** with production-grade format:
+  - 01-red-team-commander: Added 5-phase operation protocol, agent coordination
+  - 02-prompt-injection-specialist: Added 6 attack categories, payload engineering
+  - 03-adversarial-input-engineer: Added mutation engine, robustness testing
+  - 04-llm-vulnerability-analyst: Added safety testing matrix, bias detection
+  - 05-defense-strategy-developer: Added three-layer defense code, metrics
+  - 06-api-security-tester: Added auth bypass matrix, BOLA/BFLA testing
+  - 07-compliance-audit-specialist: Added OWASP compliance mapping, audit trails
+  - 08-ai-security-automation: Added CI/CD gates, monitoring, incident response
+
+- **Core skills upgraded to v2.0.0**:
+  - prompt-injection: Attack category library, severity classification, unit tests
+  - vulnerability-discovery: STRIDE threat modeling, attack surface analysis
+  - defense-implementation: Three-layer Python implementation, effectiveness metrics
+
+- **All 4 commands upgraded to v2.0.0**:
+  - /attack: OWASP vector mapping, scope comparison, operation workflow
+  - /defend: Layer-specific defense, Python code generation, metrics dashboard
+  - /report: Multiple report types, compliance mapping, remediation tracking
+  - /test: OWASP test coverage, intensity levels, CI/CD integration
+
+### Technical Improvements
+- SASMP v1.3.0 compliance with EQHM enabled
+- JSON Schema validation for all inputs/outputs
+- Structured error codes with recovery procedures
+- Latency budgets for defense layers (Input: 100ms, Processing: 0ms, Output: 50ms)
+- Parallel agent execution with limits (max 4 concurrent)
+- Token optimization (8192 per phase limit)
+
+### Framework Alignment
+- **OWASP LLM Top 10 2025**: Full coverage (LLM01-LLM10)
+- **NIST AI RMF**: Govern, Map, Measure, Manage functions
+- **MITRE ATLAS**: Adversarial technique mappings
+- **Compliance**: SOC2, GDPR, HIPAA, ISO27001, EU AI Act
+
 ## [3.2.0] - 2025-12-28
 
 ### Changed

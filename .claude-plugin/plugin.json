@@ -1,12 +1,14 @@
 {
   "name": "ai-red-teaming-plugin",
-  "version": "3.2.0",
-  "description": "Comprehensive AI Red Teaming plugin - 25 skills covering attack techniques, defense strategies, testing frameworks, and career development",
+  "version": "4.0.0",
+  "description": "Production-grade AI Red Teaming plugin with OWASP LLM Top 10 2025 alignment - 8 agents, 25 skills, comprehensive security testing toolkit",
   "author": {
     "name": "Dr. Umit Kacar & Muhsin Elcicek",
     "email": "kacarumit.phd@gmail.com"
   },
   "license": "SEE LICENSE IN LICENSE",
+  "sasmp_version": "1.3.0",
+  "eqhm_enabled": true,
   "keywords": [
     "red-teaming",
     "ai-security",
@@ -18,9 +20,11 @@
     "data-poisoning",
     "rag-exploitation",
     "guardrails",
-    "pyrit",
-    "garak",
-    "bug-bounty"
+    "owasp-llm-top10",
+    "nist-ai-rmf",
+    "mitre-atlas",
+    "devsecops",
+    "compliance"
   ],
   "repository": "https://github.com/pluginagentmarketplace/custom-plugin-ai-red-teaming",
   "agents": [
@@ -30,7 +34,8 @@
     "./agents/04-llm-vulnerability-analyst.md",
     "./agents/05-defense-strategy-developer.md",
     "./agents/06-api-security-tester.md",
-    "./agents/07-compliance-audit-specialist.md"
+    "./agents/07-compliance-audit-specialist.md",
+    "./agents/08-ai-security-automation.md"
   ],
   "commands": [
     "./commands/attack.md",
@@ -65,5 +70,11 @@
     "./skills/certifications-training/SKILL.md",
     "./skills/responsible-disclosure/SKILL.md"
   ],
-  "hooks": "./hooks/hooks.json"
+  "hooks": "./hooks/hooks.json",
+  "frameworks": {
+    "owasp_llm_2025": ["LLM01", "LLM02", "LLM03", "LLM04", "LLM05", "LLM06", "LLM07", "LLM08", "LLM09", "LLM10"],
+    "nist_ai_rmf": ["Govern", "Map", "Measure", "Manage"],
+    "mitre_atlas": ["AML.T0000", "AML.T0051", "AML.T0052"],
+    "compliance": ["SOC2", "GDPR", "HIPAA", "ISO27001", "EU_AI_ACT"]
+  }
 }
