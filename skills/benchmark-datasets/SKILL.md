@@ -3,7 +3,7 @@ name: benchmark-datasets
 version: "2.0.0"
 description: Standard datasets and benchmarks for evaluating AI security, robustness, and safety
 sasmp_version: "1.3.0"
-bonded_agent: 04-evaluation-analyst
+bonded_agent: 04-llm-vulnerability-analyst
 bond_type: SECONDARY_BOND
 # Schema Definitions
 input_schema:

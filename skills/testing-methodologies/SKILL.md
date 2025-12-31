@@ -3,7 +3,7 @@ name: testing-methodologies
 version: "2.0.0"
 description: Structured approaches for AI security testing including threat modeling, penetration testing, and red team operations
 sasmp_version: "1.3.0"
-bonded_agent: 04-evaluation-analyst
+bonded_agent: 04-llm-vulnerability-analyst
 bond_type: PRIMARY_BOND
 # Schema Definitions
 input_schema:

@@ -3,7 +3,7 @@ name: certifications-training
 version: "2.0.0"
 description: Professional certifications, CTF competitions, and training resources for AI security practitioners
 sasmp_version: "1.3.0"
-bonded_agent: 01-red-team-lead
+bonded_agent: 01-red-team-commander
 bond_type: SECONDARY_BOND
 # Schema Definitions
 input_schema:

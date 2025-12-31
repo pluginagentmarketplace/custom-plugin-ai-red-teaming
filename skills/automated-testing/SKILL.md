@@ -3,7 +3,7 @@ name: automated-testing
 version: "2.0.0"
 description: CI/CD integration and automation frameworks for continuous AI security testing
 sasmp_version: "1.3.0"
-bonded_agent: 07-automation-engineer
+bonded_agent: 08-ai-security-automation
 bond_type: SECONDARY_BOND
 # Schema Definitions
 input_schema:

@@ -5,6 +5,13 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+skills:
+  - red-team-reporting
+  - red-team-frameworks
+triggers:
+  - "red team red"
+  - "red team"
+  - "security testing"
 version: "2.0.0"
 # Input/Output Schema
 input_schema:

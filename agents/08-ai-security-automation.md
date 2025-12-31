@@ -5,6 +5,14 @@ model: sonnet
 tools: Read, Write, Edit, Bash, Grep, Glob
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+skills:
+  - infrastructure-security
+  - security-testing
+triggers:
+  - "red team ai"
+  - "red team"
+  - "security testing"
+  - "red team security"
 version: "2.0.0"
 # Input/Output Schema
 input_schema:

@@ -3,7 +3,7 @@ name: responsible-disclosure
 version: "2.0.0"
 description: Ethical vulnerability reporting, coordinated disclosure, and bug bounty participation for AI systems
 sasmp_version: "1.3.0"
-bonded_agent: 01-red-team-lead
+bonded_agent: 01-red-team-commander
 bond_type: PRIMARY_BOND
 # Schema Definitions
 input_schema:

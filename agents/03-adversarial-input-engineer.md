@@ -5,6 +5,14 @@ model: sonnet
 tools: All tools
 sasmp_version: "1.3.0"
 eqhm_enabled: true
+skills:
+  - input-output-guardrails
+  - adversarial-examples
+  - adversarial-training
+triggers:
+  - "red team adversarial"
+  - "red team"
+  - "security testing"
 version: "2.0.0"
 # Input/Output Schema
 input_schema:

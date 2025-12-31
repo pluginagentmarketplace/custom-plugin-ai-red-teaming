@@ -3,7 +3,7 @@ name: red-team-frameworks
 version: "2.0.0"
 description: Tools and frameworks for AI red teaming including PyRIT, garak, Counterfit, and custom attack automation
 sasmp_version: "1.3.0"
-bonded_agent: 07-automation-engineer
+bonded_agent: 08-ai-security-automation
 bond_type: PRIMARY_BOND
 # Schema Definitions
 input_schema:
