@@ -70,11 +70,36 @@
     "./skills/certifications-training/SKILL.md",
     "./skills/responsible-disclosure/SKILL.md"
   ],
-  "hooks": "./hooks/hooks.json",
   "frameworks": {
-    "owasp_llm_2025": ["LLM01", "LLM02", "LLM03", "LLM04", "LLM05", "LLM06", "LLM07", "LLM08", "LLM09", "LLM10"],
-    "nist_ai_rmf": ["Govern", "Map", "Measure", "Manage"],
-    "mitre_atlas": ["AML.T0000", "AML.T0051", "AML.T0052"],
-    "compliance": ["SOC2", "GDPR", "HIPAA", "ISO27001", "EU_AI_ACT"]
+    "owasp_llm_2025": [
+      "LLM01",
+      "LLM02",
+      "LLM03",
+      "LLM04",
+      "LLM05",
+      "LLM06",
+      "LLM07",
+      "LLM08",
+      "LLM09",
+      "LLM10"
+    ],
+    "nist_ai_rmf": [
+      "Govern",
+      "Map",
+      "Measure",
+      "Manage"
+    ],
+    "mitre_atlas": [
+      "AML.T0000",
+      "AML.T0051",
+      "AML.T0052"
+    ],
+    "compliance": [
+      "SOC2",
+      "GDPR",
+      "HIPAA",
+      "ISO27001",
+      "EU_AI_ACT"
+    ]
   }
 }

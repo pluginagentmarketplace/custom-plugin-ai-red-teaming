@@ -63,7 +63,7 @@
 
 ```bash
 # Step 1️⃣ Add the marketplace
-/plugin add marketplace pluginagentmarketplace/custom-plugin-ai-red-teaming
+/plugin marketplace add pluginagentmarketplace/custom-plugin-ai-red-teaming
 
 # Step 2️⃣ Install the plugin
 /plugin install ai-red-teaming-plugin@custom-plugin-ai-red-teaming
